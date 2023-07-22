@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> loginUser() async {
     try {
       if (validate()) {
-        await Provider.of<AuthProvider>(context).loginUser(
+        await Provider.of<AuthProvider>(context, listen: false).loginUser(
           _emailController.text,
           _passwordController.text,
         );

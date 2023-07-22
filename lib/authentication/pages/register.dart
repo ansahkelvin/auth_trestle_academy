@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_firebase/authentication/pages/login.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import '../../global/home_page.dart';
+import '../providers/auth_provider.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -16,6 +20,42 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _key = GlobalKey<FormState>();
+
+  bool validate() {
+    if (_key.currentState!.validate()) {
+      _key.currentState!.save();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> register() async {
+    try {
+      if (validate()) {
+        await Provider.of<AuthProvider>(context, listen: false).register(
+          _nameController.text,
+          _emailController.text,
+          _passwordController.text,
+        );
+        if (mounted) {
+          Navigator.of(context).pushReplacement(
+            MaterialPageRoute(
+              builder: (context) => const HomePage(),
+            ),
+          );
+        }
+      }
+    } catch (err) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            err.toString(),
+          ),
+        ),
+      );
+    }
+  }
 
   //A75151
   @override
@@ -99,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       height: 20,
                     ),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: register,
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.black87,
                           minimumSize: const Size(double.infinity, 45)),
