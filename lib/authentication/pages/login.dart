@@ -18,18 +18,10 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
   final _key = GlobalKey<FormState>();
 
-  bool validate() {
-    if (_key.currentState!.validate()) {
-      _key.currentState!.save();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<void> loginUser() async {
     try {
-      if (validate()) {
+      if (_key.currentState!.validate()) {
+        _key.currentState!.save();
         await Provider.of<AuthProvider>(context, listen: false).loginUser(
           _emailController.text,
           _passwordController.text,

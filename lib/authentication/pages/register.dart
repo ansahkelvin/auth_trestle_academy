@@ -21,18 +21,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final _passwordController = TextEditingController();
   final _key = GlobalKey<FormState>();
 
-  bool validate() {
-    if (_key.currentState!.validate()) {
-      _key.currentState!.save();
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   Future<void> register() async {
     try {
-      if (validate()) {
+      if (_key.currentState!.validate()) {
+        _key.currentState!.save();
         await Provider.of<AuthProvider>(context, listen: false).register(
           _nameController.text,
           _emailController.text,
