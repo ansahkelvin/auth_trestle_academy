@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_firebase/authentication/pages/app_settings.dart';
 import 'package:flutter_firebase/authentication/pages/login.dart';
 import 'package:flutter_firebase/authentication/providers/auth_provider.dart';
 import 'package:flutter_firebase/firebase_options.dart';
-import 'package:flutter_firebase/global/home_page.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: false,
         ),
-        home: const LoginPage(),
+        home: const AppSettings(),
       ),
     );
   }

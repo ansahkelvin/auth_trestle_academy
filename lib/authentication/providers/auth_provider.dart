@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_firebase/authentication/repository/auth_repository.dart';
 import 'package:flutter_firebase/authentication/repository/user_firestore.dart';
@@ -5,6 +6,10 @@ import 'package:flutter_firebase/authentication/repository/user_firestore.dart';
 class AuthProvider extends ChangeNotifier {
   AuthRepository repository = AuthRepository();
   AuthFirestore dataRepo = AuthFirestore();
+
+  Stream onAuthStateChange() {
+    return FirebaseAuth.instance.authStateChanges();
+  }
 
   Future<void> loginUser(String email, String password) async {
     try {
@@ -21,5 +26,9 @@ class AuthProvider extends ChangeNotifier {
     } catch (e) {
       rethrow;
     }
+  }
+
+  Future<void> logout() async {
+    return await repository.logout();
   }
 }
